@@ -69,6 +69,14 @@
             <artifactId>spring-cloud-context</artifactId>
             <version>2.1.2.RELEASE</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.ctrip.framework.apollo/apollo-client -->
+        <dependency>
+            <groupId>com.ctrip.framework.apollo</groupId>
+            <artifactId>apollo-client</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>

@@ -14,16 +14,25 @@ jdbc:
     slave: bms2  # 如果是多个备库，用',' 分开，并且jdbcConfigInfos中需要有对应的name是一样的
   jdbcConfigInfos:
     - name: bms
-      user:
-      password:
-      url:
+      user: root
+      password: 123456
+      url: jdbc:mysql://192.168.1.130:3306/bms?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
       uniqueResourceName: mysql.bms.write
     - name: bms2
-      user:
-      password:
-      url:
+      user: root
+      password: 123456
+      url: jdbc:mysql://192.168.1.130:3307/bms?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
       uniqueResourceName: mysql.bms.read
 
 mybatis:
   config-location: classpath:config/mybatis-config.xml
   mapper-locations: classpath:mapper/*.xml
+
+app:
+  id: apollo-sharding
+apollo:
+  meta: http://192.168.1.130:8080
+  bootstrap:
+    enabled: true
+    eagerLoad:
+      enabled: true

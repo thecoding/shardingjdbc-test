@@ -5,6 +5,7 @@ import com.shardingjdbc.datasource.JdbcConfig;
 import com.shardingjdbc.entity.BmsUser;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.scope.refresh.RefreshScope;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -32,6 +33,8 @@ public class TestController implements ApplicationContextAware{
     @Autowired
     RefreshScope refreshScope;
 
+    @Value("${shadinginfo:null}")
+    String shadingStr;
 
     @RequestMapping("/test")
     public Map<String,Object> getProperties(@RequestParam("version") String version){
@@ -45,10 +48,14 @@ public class TestController implements ApplicationContextAware{
         return map;
     }
 
+    @RequestMapping("/info")
+    public String getInfo(){
+        return shadingStr;
+    }
 
     @RequestMapping("/update")
     public BmsUser update(){
-        BmsUser bmsUser = bmsUserDao.queryById("155739380256440533");
+        BmsUser bmsUser = bmsUserDao.queryById("1");
         bmsUser.setSalt("1");
         bmsUserDao.update(bmsUser);
         return bmsUser;
@@ -57,17 +64,17 @@ public class TestController implements ApplicationContextAware{
 
     @RequestMapping("/get")
     public BmsUser getUserById(){
-        BmsUser bmsUser = bmsUserDao.queryById("155739380256440533");
+        BmsUser bmsUser = bmsUserDao.queryById("1");
         return bmsUser;
     }
 
 
     @RequestMapping("/datasource")
     public Object refresh(){
-        JdbcConfig jdbcConfig = (JdbcConfig) applicationContext.getBean("jdbcConfig");
+        JdbcConfig jdbcConfig = applicationContext.getBean(JdbcConfig.class);
         jdbcConfig.getJdbcConfigInfos().forEach(config -> {
             if (config.getName().equals("bms2")) {
-                config.setUrl("");
+                config.setUrl("jdbc:mysql://192.168.1.130:3306/bms?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC");
             }
         });
 //        BeanDefinitionRegistry beanDefinitionRegistry = (BeanDefinitionRegistry) applicationContext;
