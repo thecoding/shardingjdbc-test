@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shardingjdbc.dao.BmsUserDao">
+
+    <resultMap type="com.shardingjdbc.entity.BmsUser" id="BmsUserMap">
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="userPwd" column="user_pwd" jdbcType="VARCHAR"/>
+        <result property="realName" column="real_name" jdbcType="VARCHAR"/>
+        <result property="salt" column="salt" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="isBlock" column="is_block" jdbcType="VARCHAR"/>
+        <result property="isStaff" column="is_staff" jdbcType="VARCHAR"/>
+        <result property="empId" column="emp_id" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="updateUserId" column="update_user_id" jdbcType="VARCHAR"/>
+        <result property="createUserId" column="create_user_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="module" column="module" jdbcType="VARCHAR"/>
+        <result property="isDelete" column="is_delete" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BmsUserMap">
+        select
+          user_id, user_name, user_pwd, real_name, salt, description, is_block, is_staff, emp_id, update_time, update_user, update_user_id, create_user_id, create_time, create_user, module, is_delete
+        from bms.bms_user
+        where user_id = #{userId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BmsUserMap">
+        select
+          user_id, user_name, user_pwd, real_name, salt, description, is_block, is_staff, emp_id, update_time, update_user, update_user_id, create_user_id, create_time, create_user, module, is_delete
+        from bms.bms_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BmsUserMap">
+        select
+          user_id, user_name, user_pwd, real_name, salt, description, is_block, is_staff, emp_id, update_time, update_user, update_user_id, create_user_id, create_time, create_user, module, is_delete
+        from bms.bms_user
+        <where>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="userPwd != null and userPwd != ''">
+                and user_pwd = #{userPwd}
+            </if>
+            <if test="realName != null and realName != ''">
+                and real_name = #{realName}
+            </if>
+            <if test="salt != null and salt != ''">
+                and salt = #{salt}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="isBlock != null and isBlock != ''">
+                and is_block = #{isBlock}
+            </if>
+            <if test="isStaff != null and isStaff != ''">
+                and is_staff = #{isStaff}
+            </if>
+            <if test="empId != null and empId != ''">
+                and emp_id = #{empId}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
+            </if>
+            <if test="updateUserId != null and updateUserId != ''">
+                and update_user_id = #{updateUserId}
+            </if>
+            <if test="createUserId != null and createUserId != ''">
+                and create_user_id = #{createUserId}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="createUser != null and createUser != ''">
+                and create_user = #{createUser}
+            </if>
+            <if test="module != null and module != ''">
+                and module = #{module}
+            </if>
+            <if test="isDelete != null and isDelete != ''">
+                and is_delete = #{isDelete}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="userId" useGeneratedKeys="true">
+        insert into bms.bms_user(user_name, user_pwd, real_name, salt, description, is_block, is_staff, emp_id, update_time, update_user, update_user_id, create_user_id, create_time, create_user, module, is_delete)
+        values (#{userName}, #{userPwd}, #{realName}, #{salt}, #{description}, #{isBlock}, #{isStaff}, #{empId}, #{updateTime}, #{updateUser}, #{updateUserId}, #{createUserId}, #{createTime}, #{createUser}, #{module}, #{isDelete})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update bms.bms_user
+        <set>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="userPwd != null and userPwd != ''">
+                user_pwd = #{userPwd},
+            </if>
+            <if test="realName != null and realName != ''">
+                real_name = #{realName},
+            </if>
+            <if test="salt != null and salt != ''">
+                salt = #{salt},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="isBlock != null and isBlock != ''">
+                is_block = #{isBlock},
+            </if>
+            <if test="isStaff != null and isStaff != ''">
+                is_staff = #{isStaff},
+            </if>
+            <if test="empId != null and empId != ''">
+                emp_id = #{empId},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                update_user = #{updateUser},
+            </if>
+            <if test="updateUserId != null and updateUserId != ''">
+                update_user_id = #{updateUserId},
+            </if>
+            <if test="createUserId != null and createUserId != ''">
+                create_user_id = #{createUserId},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createUser != null and createUser != ''">
+                create_user = #{createUser},
+            </if>
+            <if test="module != null and module != ''">
+                module = #{module},
+            </if>
+            <if test="isDelete != null and isDelete != ''">
+                is_delete = #{isDelete},
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from bms.bms_user where user_id = #{userId}
+    </delete>
+
+</mapper>

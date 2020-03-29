@@ -1,2 +1,29 @@
 server:
-  port: 8080
+  port: 8081
+
+jdbc:
+  global:
+    poolsize: 10
+    driverClassName: com.mysql.jdbc.Driver
+    minIdle: 10
+    maxActive: 10
+    maxWait: 6000
+    minEictableIdleTimeMillis: 30000
+    defaultDatasource: bms
+    master: bms
+    slave: bms2  # 如果是多个备库，用',' 分开，并且jdbcConfigInfos中需要有对应的name是一样的
+  jdbcConfigInfos:
+    - name: bms
+      user:
+      password:
+      url:
+      uniqueResourceName: mysql.bms.write
+    - name: bms2
+      user:
+      password:
+      url:
+      uniqueResourceName: mysql.bms.read
+
+mybatis:
+  config-location: classpath:config/mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml
