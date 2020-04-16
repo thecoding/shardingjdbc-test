@@ -36,6 +36,9 @@ public class TestController implements ApplicationContextAware{
     @Value("${shadinginfo:null}")
     String shadingStr;
 
+    @Autowired
+    JdbcConfig jdbcConfig;
+
     @RequestMapping("/test")
     public Map<String,Object> getProperties(@RequestParam("version") String version){
         Map<String, Object> map = new HashMap<String, Object>();
@@ -55,7 +58,7 @@ public class TestController implements ApplicationContextAware{
 
     @RequestMapping("/update")
     public BmsUser update(){
-        BmsUser bmsUser = bmsUserDao.queryById("1");
+        BmsUser bmsUser = bmsUserDao.queryById("155739380256440533");
         bmsUser.setSalt("1");
         bmsUserDao.update(bmsUser);
         return bmsUser;
@@ -64,7 +67,7 @@ public class TestController implements ApplicationContextAware{
 
     @RequestMapping("/get")
     public BmsUser getUserById(){
-        BmsUser bmsUser = bmsUserDao.queryById("1");
+        BmsUser bmsUser = bmsUserDao.queryById("155739380256440533");
         return bmsUser;
     }
 
@@ -90,8 +93,7 @@ public class TestController implements ApplicationContextAware{
 
     @RequestMapping("/jdbcConfig")
     public Object getBean(){
-        JdbcConfig jdbcConfig = (JdbcConfig) applicationContext.getBean("jdbcConfig");
-        return jdbcConfig;
+        return jdbcConfig.getJdbcConfigInfos();
     }
 
 
